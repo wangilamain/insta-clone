@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+<div class="card container">
+    <div class="row mt-5">
+        <div class="col-md-4">
+            {% if profile_details.photo %}
+            <img src="{{profile_details.photo.url}}" alt="Profile Photo" width="200" height="200" class="" style="border-radius: 50%">
+            {% else %}
+            <img src="https://bit.ly/3gFpUFE" alt="Avatar" width="200" height="200" class="" style="border-radius: 40%">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <span><h4><strong>{{ profile.username }}</strong></h4></span>
+                </li>
+                {% if profile.username == user.username %}
+                <li class="list-inline-item">
+                    <a href="{% url 'edit_profile' %}" class="btn btn-sm btn-outline-dark"><strong>Edit Profile</strong></a>
+                </li>
+                {% else %}
+               
+                <li class="list-inline-item">
+                    <a data-toggle="modal" data-target="#settings">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="profile-data d-flex">
+                <li class="list-inline-item">
+                    <span class="font-weight-bold">{{images|length}} </span> posts
+                </li>
+                <p class="px-3">0 follower</p>
+                <p>1 following</p>
+              </ul>
+            <ul class="list-inline">
+              
+               
+            </ul>
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <span>
+                        {% autoescape on %}
+                        {{profile_details.bio| safe}}
+                        {% endautoescape %}
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{%extends "django_registration/base.html"%} 
+{% load bootstrap4 %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <!-- Empty div -->
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      {% if form.errors %}
+        <p> Some Information Might be Incorrect </p>
+      {% endif %}
+      <br>
+      <br>
+      <div class="mr-4 card">
+
+        <div class="card-title">
+        <div class="text-center mt-3">
+                    <img src="https://res.cloudinary.com/dw9y1xy4x/image/upload/v1603747276/insta/1600px-Instagram_logo_f6eypf.png" width="200" alt="" class="mb-4">
+                </div>
+          <h4 class="text-center">Sign Up</h4>
+        </div>
+        <div class="card-body">
+
+          <form  action="/accounts/register/" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <div class="form-group">
+              <input type="submit" class="btn btn-primary btn-sm" value="Sign Up">
+            </div>
+
+            <input type="hidden" name="next" value="{{ next }}">
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- empty div -->
+    <div class="col-md-4"></div>
+  </div>
+</div>
+
+{% endblock %}
