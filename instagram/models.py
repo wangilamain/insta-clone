@@ -6,7 +6,8 @@ from django.db.models.signals import post_save
 # Create your models here.
 
 #create profile models.
- name =models.TextField(max_length=20, blank=True)
+class Profile(models.Model):
+    name =models.TextField(max_length=20, blank=True)
     bio = models.TextField(default="no bio..." ,max_length=250)
     photo = CloudinaryField('image' ,blank = True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
