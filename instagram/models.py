@@ -1,23 +1,56 @@
 from django.db import models
 from django.contrib.auth.models import User
-from cloudinary.models import CloudinaryField
+from django.utils import timezone
 from django.db.models.signals import post_save
+from django.http import Http404
+from django.dispatch import receiver
 
 # Create your models here.
+class Post(models.Model):
+    author = models.ForeignKey('auth.user',on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/')
+    caption = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
 
-#create profile models.
+    def __str__(self):
+        return f'{self.author} Post'
+
+    class Meta:
+        db_table = 'post'
+        ordering = ['-created_date']
+
+    def addlikes(self):
+        self.likes.count()
+
+    def save_post(self):
+        self.save()
+
+    def delete_post(self):
+        self.delete()
+
+    @classmethod
+    def search_by_author(cls,search_term):
+        image = cls.objects.filter(author__username__icontains=search_term)
+        return image
+
+    @classmethod
+    def get_post(cls,id):
+        try:
+            post = Post.objects.get(pk=id)
+        except ObjectDoesNotExist:
+            raise Http404()
+        return post
+
 class Profile(models.Model):
-    name =models.TextField(max_length=20, blank=True)
-    bio = models.TextField(default="no bio..." ,max_length=250)
-    photo = CloudinaryField('image' ,blank = True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    email = models.TextField(max_length=200, blank=True)
-    following = models.ManyToManyField(User, related_name='following', blank=True)
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        db_table = 'profile'
 
-    def profile_posts(self):
-        return self.post_set.all()
+    bio = models.TextField(max_length=200, null=True, blank=True, default="bio")
+    image = models.ImageField(upload_to='picture/', null=True, blank=True)
+    user=models.OneToOneField(User, on_delete=models.CASCADE, blank=True, related_name="profile")
+    followers = models.ManyToManyField(User, related_name="followers", blank=True)
+    following = models.ManyToManyField(User, related_name="following", blank=True)
 
     def save_profile(self):
         self.save()
@@ -25,89 +58,47 @@ class Profile(models.Model):
     def delete_profile(self):
         self.delete()
 
-    @classmethod
-    def search_profile(cls, name):
-        profile = Profile.objects.filter(user__username__icontains = name)
-        return profile
+    def follow_user(self, follower):
+        return self.following.add(follower)
+
+    def unfollow_user(self, to_unfollow):
+        return self.following.remove(to_unfollow)
+
+    def is_following(self, checkuser):
+        return checkuser in self.following.all()
+
+    def get_number_of_followers(self):
+        if self.followers.count():
+            return self.followers.count()
+        else:
+            return 0
+
+    def get_number_of_following(self):
+        if self.following.count():
+            return self.following.count()
+        else:
+            return 0
 
     @classmethod
-    def get_by_id(cls, id):
-        profile = Profile.objects.get(user = id)
-        return profile
-
-    @classmethod
-    def filter_by_id(cls, id):
-        profile = Profile.objects.filter(user = id).first()
-        return profile
-
-    
-    def __str__(self):
-        return self.bio
-
-    def __str__(self):
-        return str(self.user.username)
-
-    class Meta:
-        ordering = ('-created',)
-
-class Image(models.Model):
-    image = CloudinaryField('image', blank = True)
-    caption = models.TextField(max_length=400)
-    profile = models.ForeignKey(User, on_delete=models.CASCADE)
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
-    likes = models.ManyToManyField(User, related_name='image_like', blank=True)
-
-    def save_image(self):
-        self.save()
-
-    def delete_image(self):
-        self.delete()
-
-
-    @classmethod
-    def update_caption(cls, caption):
-        update_img = cls.objects.filter(id = id).update(caption = caption)
-        return update_img
-
-    @classmethod
-    def get_all_images(cls):
-        images = cls.objects.all()
-        return images
-
-    @classmethod
-    def get_image_by_id(cls, id):
-        image = cls.objects.filter(id = id).all()
-        return image
-
-    @classmethod
-    def get_profile_pic(cls, profile):
-        images = Image.objects.filter(profile__pk = profile)
-        return images
+    def search_users(cls, search_term):
+        profiles = cls.objects.filter(user__username__icontains=search_term)
+        return profiles
 
     def __str__(self):
-        return self.caption
+        return self.user.username
 
-    class Meta:
-        ordering = ['-created',]
-
-
-
-class Comments(models.Model):
-    comment = models.CharField(max_length = 300)
-    posted_on = models.DateTimeField(auto_now=True)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='comments')
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=100)
+    created_date = models.DateTimeField(default=timezone.now)
+
+
+    def __str__(self):
+        return f'{self.post.author}, {self.user.username}'
+
+    class Meta:
+        db_table = 'comment'
 
     def save_comment(self):
         self.save()
-
-    def delete_comment(self):
-        self.delete()
-
-    @classmethod
-    def get_comments_by_images(cls, id):
-        comments = Comments.objects.filter(image__pk = id)
-        return comments
-    class Meta:
-         verbose_name = "Comment"
