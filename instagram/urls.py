@@ -1,12 +1,22 @@
 from django.urls import path,re_path
-from .views import Home,search_results,profile,edit_profile,upload_image,comment,follow_unfollow
+from . import views
+from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', Home, name = 'index'),
-    path('search/', search_results, name = 'search_results'),
-    path('user/(<username>\w+)', profile, name='profile'),
-    path('accounts/edit/', edit_profile, name='edit_profile'),
-    path('upload/', upload_image, name='upload_image'),
-    path('comment/(<image_id>\d+)', comment, name='comment'),
-    path('switch_follow/',follow_unfollow, name='follow-unfollow-view'),
+    path('home/', views.home, name='home'),
+    path('posts/', views.post, name='posts'),
+    path('create_post/', views.create_post, name='createpost'),
+    path('comment/<post_id>', views.comment, name='comment'),
+    path('add_comment/<post_id>', views.add_comment, name='add_comment'),
+    path('profile/', views.profile, name='profile'),
+    path('likes/<post_id>', views.likes, name="likes"),
+    path('search/', views.search_user, name="search"),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('register/', views.registration, name='register'),
+    path('', auth_views.LogoutView.as_view(template_name='logout.html'), name='home')
+
 ]
+if settings.DEBUG:
+    urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
