@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+
+*{
+    color:black;
+    font-family: 'Oswald', sans-serif;
+}
+
+.logout{
+    background-image: url("https://cdn.pixabay.com/photo/2015/05/28/09/08/hyacinth-787758__340.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: fixed;
+    height: 600px;
+}
+
+
+
+
+.container1{
+    padding-bottom: 650px;
+    padding-left: 700px;
+}
+
+.card1{
+    margin-top: 130px;
+}
+
+#searchform{
+    padding-left: 1200px;
+}
+
+#register{
+    background-image: url("https://cdn.pixabay.com/photo/2017/08/02/11/07/people-2570925__340.jpg");
+    background-size: 1100px 700px;
+    background-repeat: no-repeat;
+    background-position: relative;
+
+}
+.login{
+    background-image: url("https://cdn.pixabay.com/photo/2018/02/04/09/03/migration-3129340__340.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 920px;   
+}
+
+#biggie{
+    margin-top: 230px;
+}
+
+.search{
+    background-color:transparent;
+    border-bottom:2px solid rgb(8, 114, 243);
+    border-top:2px solid rgb(8, 114, 243);
+    border-left:2px solid rgb(8, 114, 243);
+    border-right:2px solid rgb(8, 114, 243);
+    height: 38px;
+}
+
+a{
+    text-decoration: none;
+    text-decoration-line: none;
+    list-style-type: none
+}
+
+.side-image{
+    display: inline-block;
+    background-color: #17a2b8;
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    margin:0;
+    border:0 solid #000000;
+    border-radius: 50%;
+}
+
+  
+.post-author{
+    display: inline-block;
+    padding-left: 14px;
+}
+
+.like{
+    display: inline;
+  
+}
+
+.brand{
+    font-size:28px;
+}
+
+.light{
+    background-color:	#F5F5F5;
+}
+
+#sticky-sidebar{
+    position: fixed;
+}
+  
+  
+.count{
+    display: inline;
+}
+
+input[type=text]{
+    border-radius: 6px;
+}
+
+input[type=text]:focus {
+    outline: none;
+}
+
+.icon-bar {
+  width: 100%; /* Full-width */
+  background-color: #555; /* Dark-grey background */
+  overflow: auto; /* Overflow due to float */
+}
+
+.icon-bar a {
+  float: left; /* Float links side by side */
+  text-align: center; /* Center-align text */
+  width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
+  padding: 12px 0; /* Some top and bottom padding */
+  transition: all 0.3s ease; /* Add transition for hover effects */
+  color: white; /* White text color */
+  font-size: 36px; /* Increased font size */
+}
+
+.icon-bar a:hover {
+  background-color: rgb(3, 186, 247); /* Add a hover color */
+}
+
+.active {
+  background-color: #4CAF50; /* Add an active/current color */
+}
+
+/* Style the navigation bar */
+.navbar {
+    width: 100%;
+    background-color: rgb(231, 224, 231);
+    overflow: auto;
+  }
+  
+  /* Navbar links */
+  .navbar a {
+    float: left;
+    text-align: center;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Navbar links on mouse-over */
+  .navbar a:hover {
+    background-color: rgb(10, 108, 245);
+  }
+  
+  /* Current/active navbar link */
+  .active {
+    background-color: #4CAF50;
+  }
+  
+  /* Add responsiveness - will automatically display the navbar vertically instead of horizontally on screens less than 500 pixels */
+  @media screen and (max-width: 500px) {
+    .navbar a {
+      float: none;
+      display: block;
+    }
+  }
