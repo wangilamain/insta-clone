@@ -5,29 +5,29 @@
 <hr>
 <div class="container content-container content">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             {% for post in posts %}
             <div class="container">
-                <div class="card" style="width: 90rem;">
+                <div class="card"style="width: 40rem;">
                     <div class="card-body">
                         <div class="card-image">
                             <div class="profile-image">
-                                <img class="rounded-circle" width="70" src="{{post.author.profile.image.url}}" />
+                                <img class="rounded-circle"width="70" src="{{post.author.profile.image.url}}" />
                             </div>
-                            <div class="card-title">
+                            <div class="post-author">
                                 <p class="user-name">{{ post.author }}</p>
                             </div>
-                            <a href="{% url 'add_comment' post.id %}"><img class="w-100" src="{{post.image.url}}"
-                                    alt="{{post.author}}"></a>
+                            <a href="{% url 'commenting' post.id %}"><img class="w-100" src="{{post.image.url}}" alt="{{post.author}}"></a>
                         </div>
                         <div class="post-info">
-                            <a class="text-primary ml-3" href="{% url 'add_comment' post.id%}"><img src="https://img.icons8.com/clouds/100/000000/comments.png" height="50px" width="50px"/>
-                                {{post.comments.all.count}} {{post.comments.all.pluralize}}</a>
+                            <a class="text-success ml-3" href="{% url 'commenting' post.id%}"><i class="fa fa-comment"></i>
+                            {{post.comments.all.count}} {{post.comments.all.pluralize}}</a>
+                            <a class="text-success ml-3" href="#"><i class="fa fa-share"></i></a>
                             {% if post.likes.id == user.id %}
-                            <a class="text-info ml-3" href="{% url 'likes' post.id%}">{{post.likes.count}}</a>
-                            {% else %}
-                            <a class="text-info ml-2" href="{% url 'likes' post.id%}"><img src="https://img.icons8.com/clouds/100/000000/filled-like.png" height="50px" width="50px"/>
-                                {{post.likes.count}}
+                            <a class="text-danger ml-3" href="{% url 'likes' post.id%}"><i class="fa fa-heart "></i>{{post.likes.count}}</a>
+                                {% else %}
+                            <a class="text-success ml-2" href="{% url 'likes' post.id%}"><i class="fa fa-heart "></i>
+                            {{post.likes.count}}
                             </a>
                             {% endif %}
                             <p class="user-name">{{ post.author }}</p>
@@ -37,7 +37,7 @@
                             <form action="{% url 'comment' post.id %}" method="post">
                                 {% csrf_token %}
                                 {{comment_form|crispy}}
-                                <input type="submit" class="btn btn-primary" value="Add Comment">
+                                <input type="submit" class="btn btn-success"  value="Comment">
                             </form>
                         </div>
                     </div>

@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'django_registration',
     'crispy_forms',
-    'django_tinymce',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'instagram.wsgi.application'
+WSGI_APPLICATION = 'insta.wsgi.application'
 
 
 # Database

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect, HttpResponse, get_object_or_404, HttpResponseRedirect
-from .models import Profile, Post, User, Comment,Following
+from .models import Profile, Post, User, Comment
 from django.contrib import messages
 from .forms import *
 from .emails import welcome_email

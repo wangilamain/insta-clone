@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.db.models.signals import post_save
 from django.http import Http404
 from django.dispatch import receiver
-
+from tinymce.models import HTMLField
 
 # Create your models here.
 class Post(models.Model):
@@ -44,8 +44,7 @@ class Post(models.Model):
         return post
 
 class Profile(models.Model):
-    class Meta:
-        db_table = 'profile'
+
 
     bio = models.TextField(max_length=200, null=True, blank=True, default="bio")
     image = models.ImageField(upload_to='picture/', null=True, blank=True)
