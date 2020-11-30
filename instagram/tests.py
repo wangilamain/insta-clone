@@ -2,6 +2,7 @@ from django.test import TestCase
 from .models import *
 from django.contrib.auth.models import User
 
+# Create your tests here.
 class PostTest(TestCase):
     def setUp(self):
         self.post = Post('image',caption='caption',created_date='created_date')

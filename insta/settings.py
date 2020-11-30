@@ -14,7 +14,10 @@ import os
 import dj_database_url
 import django_heroku
 from decouple import config,Csv
-
+from pathlib import Path
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = '@zy&(z5k6!iiz+is%d&j--pr$&tnuw^#5tq%t*coqbzkvw(k(&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,12 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'instagram',
     'bootstrap4',
-    'vote',
     'django_registration',
     'crispy_forms',
+    'django_tinymce',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +61,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Instagram.urls'
+ROOT_URLCONF = 'instagram.urls'
 
 TEMPLATES = [
     {
@@ -77,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Instagram.wsgi.application'
+WSGI_APPLICATION = 'instagram.wsgi.application'
 
 
 # Database
@@ -103,7 +105,7 @@ if config('MODE')=="dev":
 else:
    DATABASES = {
        'default': dj_database_url.config(
-           default=config('DATABASE_URL')
+           default='postgres://sharon:wangilamain@localhost/insta'
        )
    }
 

@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.http import Http404
 from django.dispatch import receiver
 
+
 # Create your models here.
 class Post(models.Model):
     author = models.ForeignKey('auth.user',on_delete=models.CASCADE)

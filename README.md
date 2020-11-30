@@ -1,7 +1,7 @@
 # Insta
 
 ###  Author
-Sharon Wwawira
+Sharon Wawira
 
 ### Description
 This is a project created using Django, it is an instgram clone that is used to upload photos and users can like comment and follow other users.
